@@ -1,0 +1,159 @@
+<html lang="cat">
+    <head>
+        <meta charset="utf-8">
+        <title>Donar la volta a una carta</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery-3.7.1.js"></script>
+        <script src="js/p100-memoria.js"></script>
+    </head>
+    <body onload="carregarTemps()">
+
+        <header>
+            <button
+                onclick="tornarAlMenu()"
+                id="botoInici"
+                class="manrope-normal">
+                Tornar al inici
+            </button>
+            <table>
+                <tr>
+                    <td class="manrope-bold">Joc memory - Fet per: Alex Barroso,
+                        Efrén Cayuela i Noel Sariñena</td>
+                    <td class="manrope-bold">
+                        <div id="btnMarcador" onclick="mostrarUltimTemps()">
+                            📊 Marcadors
+                        </div>
+                        <div id="panellInfo" class="manrope-light" style="display: none;"></div>
+                    </td>
+                </tr>
+            </table>
+            <div id="marcador" style="display: none;">
+                <div style="position: relative;">
+                    <img src="images/x.png" onclick="mostrarUltimTemps()" id="creuMarcador">
+                    <h2 class="manrope-light">Número de cartes de l'ultima partida:</h2>
+                    <h1 id="cartesEnregistrades" class="manrope-normal">---</h1>
+                    <h2 class="manrope-light">Temps enregistrat:</h2>
+                    <h1 id="tempsEnregistrat" class="manrope-normal">---</h1>
+                </div>
+            </div>
+        </header>
+
+        <div id="menuInicial">
+            <h3 class="manrope-normal">👋 Benvolgut al memory de la enginyeria informàtica</h3>
+            <table style="width: 100%; margin: 0 auto;">
+                <!-- COLUMNES DEL MENU-->
+                <tr>
+                    <td class="columnesMenu" style="width: 50%; border-right: 1px solid black;">
+                        <!-- COLUMNA 1 -->
+                        <h2 class="manrope-normal" style="text-align: center;">
+                            <i>Escull la mà amb la que vols jugar</i>
+                        </h2>
+                        <h3 class="manrope-light" style="text-align: center;">
+                            (Fes click sobre elles)
+                        </h3>
+                        <table id="maTriada">
+                            <tr>
+                                <td>
+                                    <div
+                                        class="maTriadaJoc"
+                                        onclick="numCartesDeMa(52, this, 'carta', 'davant', 'darrera')"
+                                        style="width: 80px; height: 120px; background: url(./images/deck.png) 0px -480px; scale: 1.3; filter: none; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div
+                                        class="maTriadaJoc"
+                                        onclick="numCartesDeMa(23, this, 'cartaP', 'davantP', 'darreraP')"
+                                        style="width: 111px; height: 111px; background: url(./images/pokemon.jpg) -777px 0; scale: 1.3;">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div
+                                        class="maTriadaJoc"
+                                        onclick="numCartesDeMa(48, this, 'cartaE', 'davantE', 'darreraE')"
+                                        style="width: 78px; height: 120px; background: url(./images/Baraja_espanola_completa_.png) -78px -480px; scale: 1.3">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="columnesMenu" style="width: 50%;">
+                        <!-- COLUMNA 2 -->
+                        <h2 class="manrope-normal"><i>Escull la modalitat de joc!</i></h2>
+                        <button style="width: 100%;" id="facil" onclick="comprobarCartes(4);">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="modalitat textModalitat manrope-bold">Mode fàcil</td>
+                                    <td class="modalitat textModalitat manrope-normal">2 x 2</td>
+                                    <td class="fletxa manrope-normal">➡</td>
+                                </tr>
+                            </table>
+                        </button>
+                        <br>
+                        <button style="width: 100%;" id="intermig" onclick="comprobarCartes(8);">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="modalitat textModalitat manrope-bold">Mode intermig</td>
+                                    <td class="modalitat textModalitat manrope-normal">3 x 3 (8 cartes)</td>
+                                    <td class="fletxa manrope-normal">➡</td>
+                                </tr>
+                            </table>
+                        </button>
+                        <br>
+                        <button style="width: 100%;" id="dificil" onclick="comprobarCartes(16);">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="modalitat textModalitat manrope-bold">Mode difícil</td>
+                                    <td class="modalitat textModalitat manrope-normal">4 x 4</td>
+                                    <td class="fletxa manrope-normal">➡</td>
+                                </tr>
+                            </table>
+                        </button>
+                        <h2 class="manrope-normal">
+                            <i>O personalitza l'experiència...</i>
+                        </h2>
+                        <input type="number" 
+                            id="numCartes" 
+                            placeholder="Introdueix un numero..."
+                            onchange="comprobarNumCorrecte()" 
+                            onkeyup="comprobarNumCorrecte()"/>
+                        <button
+                            onclick="comprobarCartes(0)"
+                            id="comensarJoc"
+                            class="manrope-normal">
+                            Començar el joc
+                        </button>
+
+                        <audio
+                            id="taulerSound"
+                            src="so/Undertale - Megalovania.mp3">
+                        </audio>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <p></p>
+            <progress id="temporitzador" value="10" max="1"></progress>
+            <audio
+                id="PocTemps"
+                src="so/misc198.mp3">
+            </audio>
+            <div id="tauler" style="display: none;">
+                <audio id="perdut"
+                    src="so/clash-royale-king-cry.mp3"></audio>
+                <audio id="menuSound"
+                    src="so/Elevator Music (Kevin MacLeod) - Gaming Background Music (HD).mp3"></audio>
+            </div>
+            
+            </table>
+            
+        </div>
+
+        <footer id="footer" style="display: none;">
+            <p>Fes clic en una carta per donar-li la volta</p>
+        </footer>
+
+    </body>
+</html>
